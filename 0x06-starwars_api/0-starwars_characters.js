@@ -14,8 +14,22 @@ if (!movieId) {
 // Define the URL for the Star Wars API
 const url = `https://swapi-api.hbtn.io/api/films/${movieId}/`;
 
+// Function to fetch character name
+const fetchCharacterName = (characterUrl) => {
+  return new Promise((resolve, reject) => {
+    request(characterUrl, (error, response, body) => {
+      if (error) {
+        reject(error);
+      } else {
+        const character = JSON.parse(body);
+        resolve(character.name);
+      }
+    });
+  });
+};
+
 // Make a request to the Star Wars API
-request(url, (error, response, body) => {
+request(url, async (error, response, body) => {
   if (error) {
     console.error('Error:', error);
     return;
@@ -33,19 +47,12 @@ request(url, (error, response, body) => {
   // Get the list of character URLs
   const characters = film.characters;
 
-  // For each character URL, make a request to get the character name
-  characters.forEach((characterUrl) => {
-    request(characterUrl, (charError, charResponse, charBody) => {
-      if (charError) {
-        console.error('Error:', charError);
-        return;
-      }
-
-      // Parse the character response body as JSON
-      const character = JSON.parse(charBody);
-
-      // Print the character name
-      console.log(character.name);
-    });
-  });
+  // Fetch all character names
+  try {
+    const characterNames = await Promise.all(characters.map(fetchCharacterName));
+    // Print each character name in the correct order
+    characterNames.forEach(name => console.log(name));
+  } catch (fetchError) {
+    console.error('Error:', fetchError);
+  }
 });
