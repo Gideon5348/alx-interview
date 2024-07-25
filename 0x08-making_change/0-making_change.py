@@ -15,18 +15,18 @@ def makeChange(coins, total):
 
     Returns:
         int: Fewest number of coins needed to meet the total,
-        or -1 if it's not possible.
+             or -1 if it's not possible.
     """
+    if not coins or coins is None:
+        return -1
     if total <= 0:
         return 0
-
-    # Initialize DP array with infinity
-    dp = [float('inf')] * (total + 1)
-    dp[0] = 0
-
-    # Fill the DP array
+    change = 0
+    coins = sorted(coins)[::-1]
     for coin in coins:
-        for i in range(coin, total + 1):
-            dp[i] = min(dp[i], dp[i - coin] + 1)
-
-    return dp[total] if dp[total] != float('inf') else -1
+        while coin <= total:
+            total -= coin
+            change += 1
+        if total == 0:
+            return change
+    return -1
