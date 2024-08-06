@@ -1,4 +1,9 @@
 #!/usr/bin/python3
+"""
+0x0A. Prime Game
+"""
+
+
 def isWinner(x, nums):
     """
     Determine the winner of the prime game played by Maria and Ben.
