@@ -10,7 +10,7 @@ def isWinner(x, nums):
 
     Args:
         x (int): Number of rounds.
-        nums (list): List of integers representing the end number for each round.
+        nums (list): List of integers rep the end number for each round.
 
     Returns:
         str: Name of the player with the most wins, or None if it's a tie.
@@ -31,7 +31,8 @@ def isWinner(x, nums):
             else:
                 ben_wins += 1
         else:
-            ben_wins += 1  # Ben wins if n <= 1 because Maria cannot make a move
+            ben_wins += 1
+            # Ben wins if n <= 1 because Maria cannot make a move
 
     if maria_wins > ben_wins:
         return "Maria"
@@ -39,6 +40,7 @@ def isWinner(x, nums):
         return "Ben"
     else:
         return None
+
 
 def sieve(n):
     """
@@ -60,13 +62,14 @@ def sieve(n):
     primes = [p for p in range(2, n + 1) if is_prime[p]]
     return primes
 
+
 def play_game(n, primes):
     """
     Simulate the game for a single round.
 
     Args:
         n (int): The upper limit of the numbers in the game.
-        primes (list): List of prime numbers up to the maximum number in the game.
+        primes (list): List of prime numbers up to the max number in the game.
 
     Returns:
         bool: True if Maria wins, False if Ben wins.
